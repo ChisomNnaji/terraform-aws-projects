@@ -11,9 +11,9 @@ resource "aws_instance" "web" {
               systemctl enable nginx
               systemctl start nginx
               cd /usr/share/nginx/html
-              curl -O https://www.tooplate.com/zip-templates/2126_eco_lume.zip
-              unzip 2126_eco_lume.zip
-              rm -f 2126_eco_lume.zip
+              curl -O https://www.tooplate.com/zip-templates/2145_eco_lume.zip
+              unzip 2145_eco_lume.zip
+              rm -f 2145_eco_lume.zip
               EOF
 
   tags = {
