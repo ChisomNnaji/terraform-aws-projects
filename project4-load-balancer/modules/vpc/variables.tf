@@ -1,2 +1,7 @@
-variable "vpc_cidr" {}
-variable "subnet_cidr" {}
+variable "vpc_cidr" {
+  type = string
+}
+
+variable "public_subnet_cidr" {
+  type = list(string)
+}
