@@ -8,9 +8,9 @@ This repository contains four hands-on Terraform projects that deploy AWS infras
 
 | Project | Objective | Key Features | Outputs | Challenges / Fixes |
 |---------|-----------|--------------|---------|-------------------|
-| **Project 1: VPC with EC2** | Deploy a single EC2 instance inside a custom VPC | - VPC with public subnet<br>- EC2 instance with Nginx<br>- Security group allows HTTP access | Public IP | Basic Terraform modules and variables; bootstrapping EC2 with `user_data` |
+| **Project 1: VPC with EC2** | Deploy a single EC2 instance inside a custom VPC | - VPC with public subnet<br>- EC2 instance <br>- Security group allows SSH access | Public IP | Basic Terraform setup; EC2 launched in a VPC with SSH access. |
 | **Project 2: Three-Tier Architecture** | Deploy a simple three-tier app | - VPC with public and private subnets<br>- Web server in public subnet<br>- App/DB server in private subnet<br>- Inter-tier security | Public & Private subnet IDs | Correct routing and security group configurations between tiers |
-| **Project 3: Reverse Proxy** | Deploy EC2 with Nginx as reverse proxy and S3 static hosting | - EC2 running Nginx as reverse proxy<br>- S3 bucket hosting static website<br>- Security groups for HTTP | EC2 Public IP, S3 Bucket Name | Initially displayed default Nginx page; fixed `user_data` to deploy Tooplate template. S3 bucket ACL issues resolved. |
+| **Project 3: Reverse Proxy** | Deploy EC2 with Nginx as reverse proxy and S3 static hosting | - EC2 running Nginx as reverse proxy<br>- S3 bucket hosting static website<br>- Security groups for HTTP | EC2 Public IP, S3 Bucket Name | Initially displayed nothing; fixed Nginx to echo "Hello from Terraform EC2. S3 bucket ACL issues resolved. |
 | **Project 4: Load Balanced Web App** | Deploy scalable web app with ALB and Tooplate template | - Multi-AZ public subnets<br>- EC2 with Eco Lume template<br>- Application Load Balancer distributing traffic<br>- Security groups configured | ALB DNS, EC2 Public IPs | ALB failed initially because multiple subnets were in the same AZ; fixed by using subnets in different AZs. Internet Gateway added. Nginx default page replaced with template via `user_data`. |
 
 ---
