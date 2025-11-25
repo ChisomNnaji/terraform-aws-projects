@@ -1,3 +1,5 @@
+data "aws_availability_zones" "available" {}
+
 resource "aws_lb" "alb" {
   name               = "project4-alb"
   internal           = false
