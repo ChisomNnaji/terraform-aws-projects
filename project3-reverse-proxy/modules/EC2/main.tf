@@ -17,6 +17,7 @@ resource "aws_security_group" "nginx_sg" {
   }
 }
 
+
 resource "aws_instance" "nginx" {
   ami                    = var.ami
   instance_type          = var.instance_type
@@ -77,6 +78,12 @@ user_data = <<-EOF
             EOF
 
 }
+
+
+
+
+
+
 
 
 
