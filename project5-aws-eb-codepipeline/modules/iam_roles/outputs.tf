@@ -9,3 +9,7 @@ output "service_role_arn" {
 output "ec2_instance_profile_name" {
   value = aws_iam_instance_profile.eb_ec2_profile.name
 }
+
+output "codebuild_role_arn" {
+  value = aws_iam_role.codebuild_role.arn
+}

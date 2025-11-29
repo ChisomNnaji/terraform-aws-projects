@@ -1,3 +1,3 @@
 output "bucket_name" {
-  value = aws_s3_bucket.artifact_bucket.bucket
+  value = aws_s3_bucket.artifacts.bucket
 }

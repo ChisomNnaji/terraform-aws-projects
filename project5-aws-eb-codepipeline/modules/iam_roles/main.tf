@@ -27,6 +27,35 @@ resource "aws_iam_role_policy_attachment" "code_connections" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeStarFullAccess"
 }
 
+#########
+
+resource "aws_iam_role" "codebuild_role" {
+  name = "${var.project_name}-codebuild-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "codebuild.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_dev_access" {
+  role       = aws_iam_role.codebuild_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_s3_access" {
+  role       = aws_iam_role.codebuild_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_logs" {
+  role       = aws_iam_role.codebuild_role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+}
 
 ########
 
@@ -43,9 +72,9 @@ resource "aws_iam_role" "eb_service" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "eb_service_policy" {
+resource "aws_iam_role_policy_attachment" "eb_service_managed" {
   role       = aws_iam_role.eb_service.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth"
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess-AWSElasticBeanstalk"
 }
 
 #######
@@ -61,6 +90,11 @@ resource "aws_iam_role" "eb_ec2_role" {
       Action    = "sts:AssumeRole"
     }]
   })
+}
+
+resource "aws_iam_role_policy_attachment" "eb_ec2_webtier" {
+  role       = aws_iam_role.eb_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
 
 resource "aws_iam_instance_profile" "eb_ec2_profile" {

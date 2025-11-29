@@ -8,8 +8,9 @@ module "iam_roles" {
 }
 
 module "s3_bucket" {
-  source      = "./modules/s3_bucket"
-  bucket_name = var.s3_bucket_name
+  source       = "./modules/s3_bucket"
+  bucket_name  = var.s3_bucket_name
+  project_name = var.project_name
 }
 
 
@@ -38,4 +39,11 @@ module "codepipeline" {
   s3_bucket          = module.s3_bucket.bucket_name
   eb_app_name        = module.elastic_beanstalk.eb_app_name
   eb_env_name        = module.elastic_beanstalk.eb_env_name
+}
+
+module "codebuild" {
+  source             = "./modules/codebuild"
+  project_name       = var.project_name
+  buildspec          = "buildspec.yml"
+  codebuild_role_arn = module.iam_roles.codebuild_role_arn
 }

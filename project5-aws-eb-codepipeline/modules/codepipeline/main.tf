@@ -1,25 +1,3 @@
-/*resource "aws_codebuild_project" "build" {
-  name         = "${var.project_name}-build"
-  service_role = var.codepipeline_role
-
-  artifacts {
-    type = "CODEPIPELINE"
-  }
-
-  environment {
-    compute_type    = "BUILD_GENERAL1_SMALL"
-    image           = "aws/codebuild/standard:6.0"
-    type            = "LINUX_CONTAINER"
-    privileged_mode = true
-  }
-
-  source {
-    type      = "CODEPIPELINE"
-    buildspec = file("${path.root}/buildspec.yml")
-  }
-}
-*/
-
 resource "aws_codepipeline" "pipeline" {
   name     = var.project_name
   role_arn = var.codepipeline_role
@@ -29,7 +7,6 @@ resource "aws_codepipeline" "pipeline" {
     type     = "S3"
   }
 
-  ### SOURCE STAGE
   stage {
     name = "Source"
 
@@ -50,7 +27,6 @@ resource "aws_codepipeline" "pipeline" {
     }
   }
 
-  ### BUILD STAGE
   stage {
     name = "Build"
 
@@ -64,12 +40,11 @@ resource "aws_codepipeline" "pipeline" {
       output_artifacts = ["build_output"]
 
       configuration = {
-        ProjectName = var.project_name
+        ProjectName = "${var.project_name}-build"
       }
     }
   }
 
-  ### DEPLOY STAGE
   stage {
     name = "Deploy"
 
