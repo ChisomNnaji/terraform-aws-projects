@@ -12,11 +12,6 @@ resource "aws_iam_role" "codepipeline" {
 }
 
 # Attach necessary policies
-resource "aws_iam_role_policy_attachment" "admin_access" {
-  role       = aws_iam_role.codepipeline.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-}
-
 resource "aws_iam_role_policy_attachment" "codepipeline_access" {
   role       = aws_iam_role.codepipeline.name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodePipeline_FullAccess"
@@ -26,6 +21,12 @@ resource "aws_iam_role_policy_attachment" "code_connections" {
   role       = aws_iam_role.codepipeline.name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeStarFullAccess"
 }
+
+resource "aws_iam_role_policy_attachment" "admin_access" {
+  role       = aws_iam_role.codepipeline.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
 
 #########
 
@@ -45,6 +46,11 @@ resource "aws_iam_role" "codebuild_role" {
 resource "aws_iam_role_policy_attachment" "codebuild_dev_access" {
   role       = aws_iam_role.codebuild_role.name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "codeBuildAdminAccess" {
+  role       = aws_iam_role.codebuild_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild_s3_access" {
@@ -77,6 +83,11 @@ resource "aws_iam_role_policy_attachment" "eb_service_managed" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess-AWSElasticBeanstalk"
 }
 
+resource "aws_iam_role_policy_attachment" "eb_service_s3_access" {
+  role       = aws_iam_role.eb_service.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
 #######
 
 resource "aws_iam_role" "eb_ec2_role" {
@@ -95,6 +106,16 @@ resource "aws_iam_role" "eb_ec2_role" {
 resource "aws_iam_role_policy_attachment" "eb_ec2_webtier" {
   role       = aws_iam_role.eb_ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
+}
+
+resource "aws_iam_role_policy_attachment" "BeanstalkWorkerTier" {
+  role       = aws_iam_role.eb_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
+}
+
+resource "aws_iam_role_policy_attachment" "ELB" {
+  role       = aws_iam_role.eb_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker"
 }
 
 resource "aws_iam_instance_profile" "eb_ec2_profile" {

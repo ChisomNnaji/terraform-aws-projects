@@ -11,7 +11,6 @@ variable "solution_stack" {
 }
 
 
-
 variable "min_size" {
   type = number
 }

@@ -13,3 +13,7 @@ output "eb_env_name" {
 output "codepipeline_name" {
   value = module.codepipeline.pipeline_name
 }
+
+output "eb_url" {
+  value = module.elastic_beanstalk.elasticbeanstalk_url
+}

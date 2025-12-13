@@ -5,3 +5,7 @@ output "eb_app_name" {
 output "eb_env_name" {
   value = aws_elastic_beanstalk_environment.env.name
 }
+
+output "elasticbeanstalk_url" {
+  value = "http://${aws_elastic_beanstalk_environment.env.endpoint_url}"
+}

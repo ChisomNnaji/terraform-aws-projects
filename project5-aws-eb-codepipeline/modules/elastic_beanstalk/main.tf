@@ -8,21 +8,18 @@ resource "aws_elastic_beanstalk_environment" "env" {
   solution_stack_name = var.solution_stack
   tier                = "WebServer"
 
-  # provide EB service role
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name      = "ServiceRole"
     value     = var.service_role_arn
   }
 
-  # attach the EC2 instance profile
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
     value     = var.ec2_instance_profile
   }
 
-  # autoscaling
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MinSize"
@@ -35,14 +32,12 @@ resource "aws_elastic_beanstalk_environment" "env" {
     value     = var.max_size
   }
 
-  # enhanced health reporting
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name      = "SystemType"
     value     = "enhanced"
   }
 
-  # default health check path
   setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "HealthCheckPath"
